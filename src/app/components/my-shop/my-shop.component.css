@@ -1,0 +1,23 @@
+.example-header-image {
+  background-image: url('../../../assets/img/user.png');
+  background-size: cover;
+}
+
+.example-card {
+  width: 350px;
+}
+
+.example-header-image2 {
+  background-image: url('../../../assets/img/dollar-sign.png');
+  background-size: cover;
+}
+
+.example-header-image3 {
+  background-image: url('../../../assets/img/loss-money.png');
+  background-size: cover;
+}
+
+.example-header-image4 {
+  background-image: url('../../../assets/img/profit-money.png');
+  background-size: cover;
+}

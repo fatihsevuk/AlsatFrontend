@@ -1,0 +1,25 @@
+<md-toolbar class="mat-primary">
+	<h4 [style.color]="'white'"><a md-button routerLink="">ALSAT E-TİCARET</a></h4>
+	<span ><a md-button routerLink="/productList">ÜRÜNLER</a></span>
+
+	<form (ngSubmit)="onSearchByTitle()" class="navbar-form">
+		<div class="form-group">
+			<input type="text" name="searchByTitle" [(ngModel)]="keyboard" class="form-control" placeholder="Ürün ara..."/>
+		</div>
+		<button type="submit" class="btn btn-success fa fa-search"></button>
+	</form>
+
+	<span class="example-spacer"></span>
+	<span [hidden]="!loggedIn">Hoşgeldin {{currentUsername}}</span>
+	<span [hidden]="loggedIn" ><a md-button routerLink="/login" >Giriş Yap</a></span>
+	<span [hidden]="loggedIn"><a md-button routerLink="/register">Kayıt Ol</a></span>
+	<span [hidden]="!loggedIn"><a md-button routerLink="/myShop">Mağazam</a></span>
+	<span [hidden]="!loggedIn"><a md-button routerLink="/addNewProduct">Ürün Sat</a></span>
+	<span [hidden]="!loggedIn"><a md-button routerLink="/shoppingCart"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>Sepet</a></span>
+		
+
+	<span [hidden]="!loggedIn"><button md-button (click)="logout()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Çıkış</button></span>
+</md-toolbar>
+
+
+

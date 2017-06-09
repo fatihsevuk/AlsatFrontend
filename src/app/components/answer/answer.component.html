@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row" >
+
+    <div class="col-md-8 col-md-offset-2">
+       <md-card class="example-card" *ngFor="let answer of answerList" [ngStyle]="{'margin-top':'10px'}">
+        <md-card-header>
+         <h2>Soru: {{question.question}} ?</h2>
+        </md-card-header>
+       
+      </md-card><br/>
+
+      <md-card class="example-card" *ngFor="let answer of answerList">
+        <md-card-header>
+          <div md-card-avatar class="example-header-image"></div>
+          
+          <md-card-title>Cevap Veren</md-card-title>
+          <md-card-subtitle>{{answer.fromUser.username}}</md-card-subtitle>
+        </md-card-header>
+       
+        <md-card-content>
+          <p>
+            {{answer.answer}}
+          </p>
+        </md-card-content>
+        <md-card-actions>
+          <button md-raised-button class="mat-warn">Sil</button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </div>
+</div>
+
+

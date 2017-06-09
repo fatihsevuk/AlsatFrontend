@@ -1,0 +1,65 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+      <table class="table" [mfData]="productList |dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+        [(mfSortOrder)]="sortOrder">
+
+        <thead>
+          <tr>
+            <th colspan="5">
+              <div class="row">
+
+                <div class="col-md-9">
+                  Ürün Açıklamasıyla Filtrele:
+                  <input class="form-control" [(ngModel)]="filterQuery"/>
+                </div>
+
+                <div class="col-md-3">
+                  <label class="label-control">Sayfadaki satır saysı</label>
+                  <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                </div>
+
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of mf.data">
+            <div class="row" style="margin-bottom: 30px;">
+              <div class="col-md-3">
+                <a (click)="onSelect(product)" style="cursor:pointer;">
+                  <img class="img-responsive" src="{{serverPath}}/image/product/{{product.id}}.png" src-fallback="{{defaultImageUrl}} ">
+                </a>
+              </div>
+
+              <div class="col-md-9">
+                <h4 (click)="onSelect(product)" style="margin-top : 20px; cursor:pointer;">{{product.title}}</h4>
+                <b style="font-size: x-large; color:green">{{product.price | number : '1.2-2'}} ₺ </b> <br/>
+              </div>
+
+            </div>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+
+
+
+
+
+</div>

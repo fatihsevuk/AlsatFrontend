@@ -1,0 +1,73 @@
+<div class="container">
+
+  <div class="row">
+    <div class="row" style="margin-top: 120px;">
+      <div class="col-xs-3">
+        <a routerLink="/productList">Tüm ürünlere geri dön</a>
+        <br />
+
+        <div *ngIf="product.id!=null">
+          <img class="img-responsive" src="{{serverPath}}/image/product/{{product.id}}.png" src-fallback="{{defaultImageUrl}} " />
+        </div>
+      </div>
+      <div class="col-xs-9">
+        <h3><span *ngIf="addProductSuccess" style="color:forestgreen"><i class="fa fa-check" style="color:forestgreen"></i>Sepete eklendi.</span></h3>
+        <h3><span *ngIf="notEnoughStock" style="color:red">Ürün Sayısı:{{product.inStockNumber}}</span></h3>
+
+        <h3>{{product.title}}</h3>
+        <div class="row">
+          <div class="col-xs-5">
+            <h5><strong>Satıcı: </strong><span>{{product.username}}</span></h5>
+            <p><strong>Fiyat:</strong><span>{{product.price}}</span></p>
+            <p><strong>İlan tarihi:</strong><span>{{product.addedDate}}</span></p>
+            <p><strong>Ürün Durumu:</strong><span>{{product.productCondition}}</span></p>
+            <p><strong>Kategori:</strong><span>{{product.category}}</span></p>
+            <p><strong>Konum:</strong>
+              <span>{{product.country}}-</span>
+              <span>{{product.city}}-</span>
+              <span>{{product.district}}-</span>
+            </p>
+
+            <hr/>
+            <ngb-accordion #acc="ngbAccordion">
+              <ngb-panel title="Ürün Açıklaması">
+                <ng-template ngbPanelContent>
+                  <p>{{product.description}}</p>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+            
+
+          </div>
+          <div class="col-xs-7">
+            <div class="panel panel-default" style="border-width:5px; margin-top:20px;">
+              <div class="panel-body">
+                <div class="col-xs-6">
+                  <h4>Fiyat: <span style="color: #db3208;"><span>
+            						{{product.price | number : '1.2-2'}} TL
+            					</span></span>
+                  </h4>
+
+
+                  <span>Adet: </span>
+                  <select [(ngModel)]="qty" class="browser-default" style="width:50px; display:inline;">
+                                        <option *ngFor="let x of numberList | slice:0: product.inStockNumber" [ngValue]="x" >{{x}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-6">
+                  <h4 *ngIf="product.inStockNumber>10" style="color:green;">Stokta var.</h4>
+                  <h4 *ngIf="product.inStockNumber<10 && product.inStockNumber>0" style="color:green;">Stokta <span>{{product.inStockNumber}}</span> adet var</h4>
+                  <h4 *ngIf="product.inStockNumber==0" style="color:darkred;">Stokta yok</h4>
+                  <button md-raised-button [disabled]="product.inStockNumber==0" (click)="onAddToCart()" class="mat-primary">Sepete Ekle</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,152 @@
+<div class="container">
+
+  <div [hidden]="productAdded">
+    <h3 style="margin-top:30px;">
+      Yeni Ürün Bilgisi<br>
+      <span style="font-size:small; color:red">* zorunlu alan</span>
+    </h3>
+    <form (ngSubmit)="onSubmit()">
+
+      <md-grid-list cols="4" rowHeight="60px">
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <md-input-container>
+            <input mdInput id="title" type="text" required [(ngModel)]="newProduct.title" name="title" placeholder="Ürün İsmi">
+          </md-input-container>
+        </md-grid-tile>
+
+      </md-grid-list>
+
+      <md-grid-list cols="4" rowHeight="60px">
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <md-select placeholder="Ürün Kategorisi" id="category" name="category" [(ngModel)]="newProduct.category">
+
+            <md-option value="Elektronik">Elektronik</md-option>
+            <md-option value="Ev-Ofis">Ev Ve Ofis Gereçleri</md-option>
+            <md-option value="Otomobil">Otomobil</md-option>
+            <md-option value="Kitap">Kitap</md-option>
+            <md-option value="Spor">Spor Eşyaları</md-option>
+            <md-option value="Giyim">Giyim</md-option>
+
+          </md-select>
+        </md-grid-tile>
+
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <md-select placeholder="Ürün Durumu" id="productCondition" name="productCondition" [(ngModel)]="newProduct.productCondition">
+
+            <md-option value="new">Sıfır</md-option>
+            <md-option value="used">İkinci El</md-option>
+
+          </md-select>
+        </md-grid-tile>
+
+
+
+      </md-grid-list>
+
+      <md-grid-list cols="4" rowHeight="60px">
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <md-input-container>
+            <input mdInput id="price" type="number" required [(ngModel)]="newProduct.price" name="price" step="0.01" placeholder="Satış Fiyatı">
+          </md-input-container>
+        </md-grid-tile>
+
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <md-input-container>
+            <input mdInput id="inStockNumber" type="number" required [(ngModel)]="newProduct.inStockNumber" name="inStockNumber" placeholder="Ürün Sayısı">
+          </md-input-container>
+        </md-grid-tile>
+
+
+      </md-grid-list>
+
+
+      <md-grid-list cols="4" rowHeight="60px">
+        <md-grid-tile [colspan]="1" [rowspan]="1">
+
+
+          <md-select placeholder="Ülke" id="country" name="country" [(ngModel)]="newProduct.country">
+
+            <md-option value="Turkiye">Türkiye</md-option>
+
+          </md-select>
+        </md-grid-tile>
+
+        <md-grid-tile [colspan]="1" [rowspan]="1">
+
+          <md-select placeholder="Şehir" id="city"  name="city" [(ngModel)]="newProduct.city" (change)="onChange($event)">
+
+            <md-option *ngFor="let sehir of citiesFiltered" [value]="sehir"> {{sehir}}</md-option>
+
+          </md-select>
+
+        </md-grid-tile>
+
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+
+          <md-select placeholder="İlçe" id="district" name="district" [(ngModel)]="newProduct.district">
+
+           
+            <md-option *ngFor="let district of districts" value="{{district}}">{{district}}</md-option>
+
+          </md-select>
+
+
+
+        </md-grid-tile>
+
+
+
+
+
+
+
+      </md-grid-list>
+
+
+
+
+      <md-grid-list cols="4" rowHeight="60px">
+
+
+
+
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+
+          &nbsp;
+          <md-slide-toggle [color]="red" [checked]="checked" [disabled]="disabled" [(ngModel)]="newProduct.active" name="active">Aktif</md-slide-toggle>
+
+        </md-grid-tile>
+
+      </md-grid-list>
+
+      <md-input-container>
+        <textarea mdInput id="description" required [(ngModel)]="newProduct.description" name="description" placeholder="Ürün Açıklaması"></textarea>
+      </md-input-container>
+
+
+      Ürün Resimleri &nbsp;
+
+      <input type="file" id="productImage" name="productImage" multiple="multiple" (change)="uploadImageService.fileChangeEvent($event)">
+
+
+      <md-grid-list cols="20" rowHeight="60px">
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <button class="mat-primary" md-raised-button type="submit">Ürün Ekle</button>
+        </md-grid-tile>
+        <md-grid-tile [colspan]="2" [rowspan]="1">
+          <a class="mat-warn" md-raised-button routerLink="/">Vazgeç</a>
+        </md-grid-tile>
+      </md-grid-list>
+
+
+
+
+    </form>
+  </div>
+
+  <div class="row" [hidden]="!productAdded">
+    <h3>Ürün başarıyla eklendi!</h3>
+  </div>
+
+
+</div>

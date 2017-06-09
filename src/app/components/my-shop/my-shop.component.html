@@ -1,0 +1,458 @@
+<div class="container">
+  <div class="row" style="text-align: center;">
+    <h1>
+      {{ownerUser.shopName}}
+    </h1>
+    <hr/>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <md-card class="example-card pull-left" [ngStyle]="{'margin-top':'5px'}">
+
+
+        <md-card-content>
+          <h1>Cüzdan</h1>
+        </md-card-content>
+
+      </md-card>
+
+
+      <md-card class="example-card pull-left" [ngStyle]="{'margin-top':'5px'}">
+        <md-card-header>
+          <div md-card-avatar class="example-header-image2"></div>
+
+          <md-card-title>Kazanç</md-card-title>
+
+        </md-card-header>
+
+        <md-card-content>
+          <h1 [ngStyle]="{'color':'orange'}">{{gain |currency :'TRY'}}</h1>
+        </md-card-content>
+
+      </md-card>
+
+      <md-card class="example-card pull-left" [ngStyle]="{'margin-top':'5px'}">
+        <md-card-header>
+          <div md-card-avatar class="example-header-image3"></div>
+          <md-card-title>Ödeme</md-card-title>
+
+        </md-card-header>
+
+        <md-card-content>
+          <h1 [ngStyle]="{'color':'red'}">{{payment |currency :'TRY'}}</h1>
+        </md-card-content>
+
+      </md-card>
+
+      <md-card class="example-card pull-left" [ngStyle]="{'margin-top':'5px'}">
+        <md-card-header>
+          <div md-card-avatar class="example-header-image4"></div>
+          <md-card-title>Kar</md-card-title>
+
+        </md-card-header>
+
+        <md-card-content>
+          <h1 [ngStyle]="{'color':'green'}">{{profit |currency :'TRY'}}</h1>
+        </md-card-content>
+
+      </md-card>
+
+
+
+    </div>
+    <div class="col-md-8">
+
+      <ngb-tabset type="pills">
+
+        <ngb-tab title="Satıştaki Ürünlerin">
+          <ng-template ngbTabContent>
+            <table class="table" [mfData]="productList |dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+              [(mfSortOrder)]="sortOrder">
+
+              <thead>
+                <tr>
+                  <th colspan="5">
+                    <div class="row">
+
+                      <div class="col-md-9">
+                        Ürün Açıklamasıyla Filtrele:
+                        <input class="form-control" [(ngModel)]="filterQuery" />
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="label-control">Satır saysı</label>
+                        <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                      </div>
+
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of mf.data">
+                  <div class="row" style="margin-bottom: 30px;">
+                    <div class="col-md-3">
+                      <a (click)="onSelect(product)" style="cursor:pointer;">
+                  <img class="img-responsive" src="{{serverPath}}/image/product/{{product.id}}.png" src-fallback="{{defaultImageUrl}} ">
+                </a>
+                    </div>
+
+                    <div class="col-md-9">
+                      <h4 (click)="onSelect(product)" style="margin-top : 20px; cursor:pointer;">{{product.title}}</h4>
+                      <b style="font-size: x-large; color:green">{{product.price | number : '1.2-2'}} ₺ </b> <br/>
+                    </div>
+
+                  </div>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="İstediğin Ürünler">
+          <ng-template ngbTabContent>
+
+            <table class="table" [mfData]="requestedProductRequestList" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+              [(mfSortOrder)]="sortOrder">
+
+              <thead>
+                <tr>
+                  <th colspan="5">
+                    <div class="row">
+
+                      <div class="col-md-9">
+
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="label-control">Satır saysı</label>
+                        <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                      </div>
+
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let requestedProduct of mf.data">
+                  <div class="row" style="margin-bottom: 30px;">
+                    <div class="col-md-3">
+                      <a (click)="onSelect(requestedProduct.product)" style="cursor:pointer;">
+                  <img class="img-responsive" src="{{serverPath}}/image/product/{{requestedProduct.product.id}}.png" src-fallback="{{defaultImageUrl}} ">
+                </a>
+                    </div>
+
+                    <div class="col-md-9">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <h4 (click)="onSelect(requestedProduct.product)" style="margin-top : 20px; cursor:pointer;">{{requestedProduct.product.title}}</h4>
+                          <b style="font-size: x-large; color:green">{{requestedProduct.product.price | number : '1.2-2'}} ₺ </b>                          <br/>
+                        </div>
+                        <div class="col-md-4" style="margin-top:40px;">
+                          <a md-raised-button class="mat-warn" (click)="removeProductRequest(requestedProduct)">İsteği İptal Et</a>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Senden Onay bekleyen Ürünler">
+
+          <ng-template ngbTabContent>
+            <table class="table" [mfData]="desiredProductRequestList " #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+              [(mfSortOrder)]="sortOrder">
+
+              <thead>
+                <tr>
+                  <th colspan="5">
+                    <div class="row">
+
+                      <div class="col-md-9">
+
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="label-control">Satır saysı</label>
+                        <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                      </div>
+
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let desiredProduct of mf.data">
+                  <div class="row" style="margin-bottom: 30px;">
+                    <div class="col-md-3">
+                      <a (click)="onSelect(desiredProduct.product)" style="cursor:pointer;">
+                  <img class="img-responsive" src="{{serverPath}}/image/product/{{desiredProduct.product.id}}.png" src-fallback="{{defaultImageUrl}} ">
+                </a>
+                    </div>
+
+                    <div class="col-md-9">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <h4 (click)="onSelect(product)" style="margin-top : 20px; cursor:pointer;">{{desiredProduct.product.title}}</h4>
+                          <span><i class="fa fa-user" aria-hidden="true"> Müşteri : </i><button (click)="showUserInfo(desiredProduct.customer)">{{desiredProduct.customer.username}}</button></span><br/>
+                          <b style="font-size: x-large; color:green">{{desiredProduct.product.price | number : '1.2-2'}} ₺ </b>                          <br/>
+                        </div>
+
+                        <div class="col-md-3" style="margin-top: 40px;">
+                          <a md-raised-button class="mat-primary" (click)="toggleQuestion()">Soru Sor</a>
+                        </div>
+
+                        <div class="col-md-3" style="margin-top: 40px;">
+                          <a md-raised-button class="mat-accent" (click)="confirmSales(desiredProduct,desiredProduct.product.id , desiredProduct.customer.id)">Satışı Onayla</a>
+                        </div>
+                        <div class="col-md-3" style="margin-top: 40px;">
+                          <a md-raised-button class="mat-warn" (click)="removeProductRequest(desiredProduct)">Reddet</a>
+                        </div>
+
+                      </div>
+
+                      <div class="row" [hidden]="!viewQuestion">
+
+                        <div class="form-group">
+                          <label>Soru:</label>
+                          <textarea class="form-control" rows="5" id="question" [(ngModel)]="question.question"></textarea>
+                          <a md-raised-button class="mat-accent" (click)="addQuestion(question,desiredProduct.customer.id)">Soru Sor</a>
+                        </div>
+
+                        <div *ngIf="questionAdded">
+
+                          <div class="alert alert-success alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <strong>Soru Soruldu!</strong>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Gelen Sorular">
+          <ng-template ngbTabContent>
+
+            <table class="table" [mfData]="comingQuestion" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+              <thead>
+                <tr>
+                  <th colspan="5">
+                    <div class="row">
+
+                      <div class="col-md-9">
+
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="label-control">Satır saysı</label>
+                        <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                      </div>
+
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let question of mf.data;trackBy: question.id">
+                  <div class="row" style="margin-bottom: 30px;">
+
+                    <md-card class="example-card">
+                      <md-card-header>
+                        <div md-card-avatar class="example-header-image"></div>
+                        <md-card-title>Kim Sormuş?</md-card-title>
+                        <md-card-subtitle>{{question.fromUser.username}}</md-card-subtitle>
+                      </md-card-header>
+
+                      <md-card-content>
+                        <p [ngStyle]="{'color': '#5768c3' , 'font-style':'italic' ,'font-weight':'bold'}">
+                          {{question.question}}
+                        </p>
+
+                        <div class="row" [hidden]="question.id!=questionId">
+
+                          <div class="form-group">
+                            <label>Cevap:</label>
+                            <textarea class="form-control" rows="5" id="answer" [(ngModel)]="answer.answer"></textarea>
+                            <a md-raised-button class="mat-accent" (click)="addAnswer(answer,question.id)">Cevap Ver</a>
+                          </div>
+
+                          <div *ngIf="answerAdded">
+
+                            <div class="alert alert-success alert-dismissable">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                              <strong>Cevap Verildi!</strong>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+
+
+                      </md-card-content>
+                      <md-card-actions>
+                        <button md-raised-button class="mat-primary" (click)="toggleAnswer(question.id)">Cevap Ver</button>
+
+                      </md-card-actions>
+                    </md-card><br/>
+
+
+                  </div>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+
+
+
+
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Senin Soruların">
+
+          <ng-template ngbTabContent>
+
+            <table class="table" [mfData]="sendingQuestion " #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+              <thead>
+                <tr>
+                  <th colspan="5">
+                    <div class="row">
+
+                      <div class="col-md-9">
+
+                      </div>
+
+                      <div class="col-md-3">
+                        <label class="label-control">Satır saysı</label>
+                        <select class="form-control imput-sm" [(ngModel)]="rowsOnPage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="15">15</option>
+                  </select>
+                      </div>
+
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let question of mf.data">
+                  <div class="row" style="margin-bottom: 30px;">
+
+                    <md-card class="example-card">
+                      <md-card-header>
+                        <div md-card-avatar class="example-header-image"></div>
+                        <md-card-title>Kime Sordun?</md-card-title>
+                        <md-card-subtitle>{{question.toUsername}}</md-card-subtitle>
+                      </md-card-header>
+
+                      <md-card-content>
+                        <p [ngStyle]="{'color': '#5768c3' , 'font-style':'italic' ,'font-weight':'bold'}">
+                          {{question.question}}
+                        </p>
+                        <span>Tarih: {{question.date | date:'medium'}}</span>
+                      </md-card-content>
+                      <md-card-actions>
+                        <button md-raised-button class="mat-warn" (click)="removeQuestion(question.id)">Sil</button>
+                        <button md-raised-button class="mat-accent" (click)="showAnswers(question)">Verilen Cevaplar</button>
+                      </md-card-actions>
+                    </md-card><br/>
+
+
+                  </div>
+                </tr>
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+
+
+
+
+          </ng-template>
+
+
+        </ngb-tab>
+
+
+
+
+      </ngb-tabset>
+
+
+
+
+    </div>
+
+  </div>
+
+</div>

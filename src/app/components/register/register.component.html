@@ -1,0 +1,67 @@
+<div clas="container">
+  <div [hidden]="loggedIn">
+   <div align="center">
+      <h3 style="margin-top:30px;">
+      Yeni Kullanıcı Kaydı
+    </h3>
+   </div>
+
+    <md-grid-list  cols="3" [style.margin-top]="'20px'">
+
+      <md-grid-tile [colspan]="1"></md-grid-tile>
+      
+      <md-grid-tile [colspan]="1">
+
+        <form (ngSubmit)="onSubmit()">
+
+          <md-input-container class="full-width">
+            <input type="text" mdInput [(ngModel)]='user.shopName' name="shopName" id='shopName' placeholder="Mağaza Adı">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="text" mdInput [(ngModel)]='user.username' name="username" id='username' placeholder="Kullanıcı Adı">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="password" mdInput [(ngModel)]='user.password' name="password" id='password' placeholder="Parola">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="password" mdInput [(ngModel)]='user.rePassword' name="rePassword" id='rePassword' placeholder="Parola Yeniden">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="email" mdInput [(ngModel)]='user.email' name="email" id='email' placeholder="Email">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="text" mdInput [(ngModel)]='user.firstname' name="firstname" id='firstname' placeholder="Ad">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="text" mdInput [(ngModel)]='user.lastname' name="lastname" id='lastname' placeholder="Soyad">
+          </md-input-container>
+
+          <md-input-container class="full-width">
+            <input type="number" mdInput [(ngModel)]='user.phone' name="phone" id='phone' placeholder="Telefon numarası">
+          </md-input-container>
+
+          <md-slide-toggle [color]="red" [checked]="checked" [disabled]="disabled" [(ngModel)]="user.enabled" name="enabled">Aktif</md-slide-toggle>
+
+
+          <button md-raised-button type="submit" class="mat-primary">
+                <i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>
+          </button>
+
+
+        </form>
+
+      </md-grid-tile>
+
+
+
+
+    </md-grid-list>
+  </div>
+
+</div>

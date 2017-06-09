@@ -1,0 +1,79 @@
+<div class="container">
+
+    <div class="row" style="margin-top: 120px;">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6 text-left">
+                    <a md-raised-button class="mat-warn" routerLink="/productList">Alışverişe Devam Et</a>
+                </div>
+               
+            </div>
+            <br/>
+            <div *ngIf="cartItemUpdated" class="alert alert-success">
+                Sepet Güncellendi.
+            </div>
+             <div *ngIf="cartItemRequested" class="alert alert-success">
+                Ürün isteği gönderildi.
+            </div>
+            <div *ngIf="notEnoughStock" class="alert alert-warning">
+                Stock yetersiz.
+            </div>
+            <div *ngIf="emptyCart" class="alert alert-warning">
+                Sepet boş.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-8">
+                <h4>Ürünler</h4>
+            </div>
+            <div class="col-xs-2">
+                <h4>Fiyat</h4>
+            </div>
+            <div class="col-xs-2">
+                <h4>Adet</h4>
+            </div>
+        </div>
+
+
+            <div class="row" *ngFor="let cartItem of cartItemList">
+                <hr/>
+                <div class="col-xs-2">
+                    <a md-button (click)="onSelect(cartItem.product)"><img class="img-responsive" src="{{serverPath}}/image/product/{{cartItem.product.id}}.png" style="width:70px;" /></a>
+                </div>
+                <div class="col-xs-4">
+                    <a class="pointer" (click)="onSelect(cartItem.product)">
+                        <h4>{{cartItem.product.title}}</h4>
+                    </a>
+                    <p>Stoktaki ürün sayısı:{{cartItem.product.inStockNumber}}</p>
+                    <p *ngIf="cartItem.product.inStockNumber >= cartItem.qty" style="color:green;">Stokta var.</p>
+                    <p *ngIf="cartItem.product.inStockNumber < cartItem.qty" style="color:#db3208; font-size:large;">İstediğiniz miktarda ürün stokta yok.</p>
+                    <p *ngIf="cartItem.product.inStockNumber == 0" style="color:darkred;">Ürün stockta yok.</p>
+                    <a class="pointer" (click)="onRemoveCartItem(cartItem)">Sil</a>
+                </div>
+                <div class="col-xs-2">
+                     <a md-raised-button class="mat-accent" (click)="sendProductRequest(cartItem)">Ürünü İste</a>
+                </div>
+                <div class="col-xs-2">
+                    <h5 style="color:#db3208; font-size:large;"><span [ngClass]="{'text-strike': cartItem.product.inStockNumber == 0}">{{cartItem.product.price}} TL</span>
+                    </h5>
+                </div>
+                <div class="col-xs-2">
+                    <input hidden="hidden" name="id" [(ngModel)]="cartItem.id" />
+                    <input id="cartItem.id" name="qty" [disabled]="cartItem.product.inStockNumber==0" class="form-control cartItemQty" [(ngModel)]="cartItem.qty"
+                        (ngModelChange)="cartItem.toUpdate=true" />
+                    <a md-button *ngIf="cartItem.toUpdate && cartItem.product.inStockNumber >= cartItem.qty && cartItem.qty!=0" class="pointer mat-warn" (click)="onUpdateCartItem(cartItem)">Güncelle</a>
+                </div>
+            </div>
+            <div class="row">
+                <hr />
+                <h4 class="col-xs-12 text-right"><strong style="font-size: large">Toplam Fiyat (<span>{{cartItemNumber}}</span> ürün için): </strong>
+                    <span style="color:#db3208;font-size: large"><span>{{shoppingCart.grandTotal}} TL</span></span>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+
+
